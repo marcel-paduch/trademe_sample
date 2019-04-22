@@ -28,8 +28,8 @@ android {
     }
 
     buildTypes.each {
-        it.buildConfigField 'String', 'SANDBOX_CONSUMER_KEY', SANDBOX_CONSUMER_KEY
-        it.buildConfigField 'String', 'SANDBOX_CONSUMER_SECRET', SANDBOX_CONSUMER_SECRET
+        it.buildConfigField 'String', 'SANDBOX_CONSUMER_KEY', "\"A1AC63F0332A131A78FAC304D007E7D1\""
+        it.buildConfigField 'String', 'SANDBOX_CONSUMER_SECRET', "\"EC7F18B17A062962C6930A8AE88B16C7\""
     }
 }
 

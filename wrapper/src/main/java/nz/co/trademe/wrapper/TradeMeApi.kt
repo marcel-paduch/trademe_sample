@@ -16,9 +16,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  * Instantiate this class with a [CallAdapter.Factory] of your choice and fill in the return types in the [TradeMeApiService]
  * depending on your choice of [CallAdapter].
  *
+ *
  */
 class TradeMeApi(
-    private val callAdapterFactory: CallAdapter.Factory,
     private val clientBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
 ) {
 
@@ -32,7 +32,6 @@ class TradeMeApi(
         clientBuilder.networkInterceptors().add(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
 
         return Retrofit.Builder()
-            .addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(
                 MoshiConverterFactory.create(
                     Moshi.Builder().add(KotlinJsonAdapterFactory()).build()

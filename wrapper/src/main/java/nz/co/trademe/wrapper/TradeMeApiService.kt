@@ -1,7 +1,9 @@
 package nz.co.trademe.wrapper
 
 import nz.co.trademe.wrapper.models.Category
+import nz.co.trademe.wrapper.models.ListedItemDetail
 import nz.co.trademe.wrapper.models.SearchCollection
+import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -33,7 +35,7 @@ interface TradeMeApiService {
      * [Trade Me Api Reference]("https://developer.trademe.co.nz/api-reference/search-methods/general-search/")
      */
     @GET("v1/Search/General.json")
-    fun generalSearch(@QueryMap filters: Map<String, String>): Nothing = TODO("Change the return type of this method so you can retrieve a SearchCollection")
+    fun generalSearch(@QueryMap filters: Map<String, String>): Call<SearchCollection>
 
     /**
      * Retrieve general categories
@@ -46,8 +48,8 @@ interface TradeMeApiService {
      *
      * [Trade Me Api Reference]("https://developer.trademe.co.nz/api-reference/catalogue-methods/retrieve-general-categories/")
      */
-    @GET("v1/Categories/{number}.json")
-    fun getCategory(@Path("number") number: String): Nothing = TODO("Change the return type of this method so you can retrieve a Category")
+    @GET("v1/Categories/{number}.json?depth=1")
+    fun getCategory(@Path("number") number: String): Call<Category>
 
     /**
      * Retrieve the details of a single listing
@@ -58,5 +60,6 @@ interface TradeMeApiService {
      *
      */
     @GET("v1/Listings/{listingId}.json")
-    fun getListing(@Path("listingId") listingId: Long): Nothing = TODO("Change the return type of this method so you can retrieve a ListedItemDetail")
+    fun getListing(@Path("listingId") listingId: Long): Call<ListedItemDetail>
+
 }
