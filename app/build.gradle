@@ -58,6 +58,7 @@ dependencies {
     //testing
     def junit = "4.12"
     def mockito = "1.10.19"
+    def retrofitMock = "2.5.0"
     def androidTestSuite = "1.1.0"
     def androidTestRules = "1.1.1"
     def androidCore = "2.0.1"
@@ -65,6 +66,7 @@ dependencies {
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "androidx.arch.core:core-testing:$androidCore"
+    testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofitMock"
     androidTestImplementation "androidx.test.ext:junit:$androidTestSuite"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
     androidTestImplementation "androidx.test:runner:$androidTestSuite"
