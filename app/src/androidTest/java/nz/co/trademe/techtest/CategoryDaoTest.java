@@ -40,6 +40,14 @@ public class CategoryDaoTest {
        assert(categories.size() == 3);
     }
 
+    @Test
+    public void testInsertAndGetOtherCategories(){
+        insertList();
+        List<Category> categories = categoryDao.getSubcategoriesForId(null).getValue();
+        assert categories != null;
+        assert(categories.size() == 2);
+    }
+
     private void insertList(){
         List<Category> list = new ArrayList<>();
         list.add(createCategory("1", true));
