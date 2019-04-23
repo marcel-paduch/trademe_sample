@@ -25,4 +25,8 @@ public class ItemDetailsViewModel extends ViewModel {
     public MutableLiveData<ListedItemDetail> getItemDetail() {
         return itemDetail;
     }
+
+    public MutableLiveData<Boolean> getIsLoadig(){
+        return itemDetailsRepository.getIsLoading();
+    }
 }

@@ -38,6 +38,7 @@ public class ItemListRepository extends LruCacheRepository<List<SearchListing>> 
     /**
      * This method gets first 20 items from the given category and store these items in cache
      * No error handling
+     *
      * @param id category id
      */
     @Override
@@ -49,17 +50,18 @@ public class ItemListRepository extends LruCacheRepository<List<SearchListing>> 
             @Override
             public void onResponse(Call<SearchCollection> call, Response<SearchCollection> response) {
                 SearchCollection searchCollection = response.body();
-                if(searchCollection != null){
+                if (searchCollection != null) {
                     cache.put(id, searchCollection.getList());
                     emitFromCache(id);
-                } else {
-                    getIsLoading().postValue(false);
                 }
+                getIsLoading().postValue(false);
+
             }
 
             @Override
             public void onFailure(Call<SearchCollection> call, Throwable t) {
                 t.printStackTrace();
+                getIsLoading().postValue(false);
             }
         });
     }

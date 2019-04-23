@@ -69,6 +69,7 @@ public class CategoryFragment extends BaseFragment {
             }
         });
         viewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
+            dismissLoading();
             if (categories != null && categories.size() > 0) {
                 mAdapter.addItems(categories);
             }

@@ -28,11 +28,13 @@ public class ItemDetailsRepository extends LruCacheRepository<ListedItemDetail> 
                 ListedItemDetail itemDetail = response.body();
                 cache.put(id, itemDetail);
                 emitFromCache(id);
+                getIsLoading().postValue(false);
             }
 
             @Override
             public void onFailure(Call<ListedItemDetail> call, Throwable t) {
-
+                t.printStackTrace();
+                getIsLoading().postValue(false);
             }
         });
     }

@@ -23,7 +23,7 @@ import nz.co.trademe.wrapper.TradeMeApi;
 /**
  * This fragment shows detailed item listing
  */
-public class ItemDetailsFragment extends Fragment {
+public class ItemDetailsFragment extends BaseFragment {
     public static final String LISTING_ID_KEY = ItemDetailsFragment.class.getCanonicalName() + ".listng";
     @Nullable
     @Override
@@ -49,6 +49,13 @@ public class ItemDetailsFragment extends Fragment {
 
         }
         viewModel.init(listingId);
+        viewModel.getIsLoadig().observe(getViewLifecycleOwner(), val -> {
+            if(val){
+                showLoading();
+            } else {
+                dismissLoading();
+            }
+        });
         viewModel.getItemDetail().observe(getViewLifecycleOwner(), item -> {
             textView.setText(item.getTitle());
             if(item.getPhotos() != null && item.getPhotos().size() > 0){
