@@ -60,9 +60,7 @@ public class ItemDetailsFragment extends BaseFragment {
             if(item.getPhotos() != null && item.getPhotos().size() > 0){
                 Glide.with(this).load(item.getPhotos().get(0).getValue().component2()).into(imageView);
             } else {
-                if(getActivity() != null){
-                    getActivity().onBackPressed();
-                }
+                showSnackbar(getString(R.string.no_data));
             }
 
         });

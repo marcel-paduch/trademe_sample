@@ -55,7 +55,14 @@ public class ItemListFragment extends BaseFragment {
                 dismissLoading();
             }
         });
-        viewModel.getItems().observe(this, mAdapter::addItems);
+        viewModel.getItems().observe(this, items -> {
+            if(items == null || items.size() == 0){
+                showSnackbar(getString(R.string.no_data));
+                return;
+            }
+            mAdapter.addItems(items);
+
+        });
         return view;
     }
 

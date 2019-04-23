@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">techtest</string>
+    <string name="no_data">Nothing to show</string>
 </resources>

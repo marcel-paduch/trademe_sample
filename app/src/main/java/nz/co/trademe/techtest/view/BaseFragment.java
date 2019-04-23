@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.google.android.material.snackbar.Snackbar;
 
 public class BaseFragment extends Fragment {
     private ProgressDialog progress;
@@ -36,6 +37,13 @@ public class BaseFragment extends Fragment {
     public void onPause() {
         super.onPause();
         dismissLoading();
+    }
+
+
+    public void showSnackbar(String msg){
+        if(getView() != null){
+            Snackbar.make(getView(), msg, Snackbar.LENGTH_SHORT).show();
+        }
     }
 
 }
