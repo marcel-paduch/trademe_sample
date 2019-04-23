@@ -22,7 +22,10 @@ import nz.co.trademe.wrapper.TradeMeApi;
 
 import java.util.concurrent.Executors;
 
-public class CategoryFragment extends Fragment {
+/**
+ * This fragment allows user to browse categories
+ */
+public class CategoryFragment extends BaseFragment {
     private CategoryViewModel viewModel;
     private RecyclerView recyclerView;
     private CategoryAdapter mAdapter;
@@ -32,9 +35,6 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category_browser, container, false);
         recyclerView = view.findViewById(R.id.my_recycler_view);
-        ProgressDialog progress = new ProgressDialog(getContext());
-        progress.setTitle("Loading");
-        progress.setCancelable(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new CategoryAdapter();
         mAdapter.setCategoryClickListener(new CategoryAdapter.CategoryClickListener() {
@@ -49,9 +49,11 @@ public class CategoryFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(mAdapter);
+        //Custom factory to handle arguments for viewmodel class
         ViewModelProvider.Factory factory = new ViewModelProvider.Factory() {
             @NonNull
             @Override
+            @SuppressWarnings("unchecked")
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
                 return (T) new CategoryViewModel(CategoryRepository.getInstance(AppDatabase.getInstance(getContext()).categoryDao(),
                         new TradeMeApi().get(), Executors.newSingleThreadExecutor()));
@@ -61,14 +63,13 @@ public class CategoryFragment extends Fragment {
         viewModel.init();
         viewModel.getIsLoading().observe(this, val -> {
             if (val) {
-                progress.show();
+                showLoading();
             } else {
-                progress.dismiss();
+                dismissLoading();
             }
         });
-        viewModel.getCategories().observe(this, categories -> {
+        viewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
             if (categories != null && categories.size() > 0) {
-                progress.dismiss();
                 mAdapter.addItems(categories);
             }
         });

@@ -2,10 +2,12 @@ package nz.co.trademe.techtest.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import nz.co.trademe.techtest.data.SingleLiveEvent;
 import nz.co.trademe.techtest.data.repository.ItemDetailsRepository;
 import nz.co.trademe.wrapper.models.ListedItemDetail;
 
+/**
+ * ViewModel for itemDetails
+ */
 public class ItemDetailsViewModel extends ViewModel {
     private ItemDetailsRepository itemDetailsRepository;
     private MutableLiveData<ListedItemDetail> itemDetail;

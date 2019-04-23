@@ -20,7 +20,9 @@ import nz.co.trademe.techtest.data.repository.ItemDetailsRepository;
 import nz.co.trademe.techtest.viewmodel.ItemDetailsViewModel;
 import nz.co.trademe.wrapper.TradeMeApi;
 
-
+/**
+ * This fragment shows detailed item listing
+ */
 public class ItemDetailsFragment extends Fragment {
     public static final String LISTING_ID_KEY = ItemDetailsFragment.class.getCanonicalName() + ".listng";
     @Nullable
@@ -32,6 +34,7 @@ public class ItemDetailsFragment extends Fragment {
         ViewModelProvider.Factory factory = new ViewModelProvider.Factory() {
             @NonNull
             @Override
+            @SuppressWarnings("unchecked")
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
                 return (T) new ItemDetailsViewModel(ItemDetailsRepository.getInstance(new TradeMeApi().get()));
             }

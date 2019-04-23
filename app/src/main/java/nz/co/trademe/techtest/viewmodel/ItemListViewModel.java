@@ -7,6 +7,9 @@ import nz.co.trademe.wrapper.models.SearchListing;
 
 import java.util.List;
 
+/**
+ * ViewModel for list of items in a category
+ */
 public class ItemListViewModel extends ViewModel {
     private ItemListRepository repository;
     private MutableLiveData<List<SearchListing>> items;

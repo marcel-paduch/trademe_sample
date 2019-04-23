@@ -12,10 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * This class combines data from local and remote source.
+ * This class combines item list data from local and remote source.
+ * Shows first 20 items for specified category.
+ * Uses in memory cache, due to dynamic nature of the data.
  */
 public class ItemListRepository extends LruCacheRepository<List<SearchListing>> {
     private static ItemListRepository INSTANCE = null;
+    //Query parameters for limiting search results only to first 20 rows of specific category
     private static final String CATEGORY = "category";
     private static final String ROWS = "rows";
     private static final String MAX_RESULT = "20";
@@ -32,6 +35,11 @@ public class ItemListRepository extends LruCacheRepository<List<SearchListing>> 
     }
 
 
+    /**
+     * This method gets first 20 items from the given category and store these items in cache
+     * No error handling
+     * @param id category id
+     */
     @Override
     protected void refreshItems(String id) {
         HashMap<String, String> queryMap = new HashMap<>(1);
@@ -44,12 +52,14 @@ public class ItemListRepository extends LruCacheRepository<List<SearchListing>> 
                 if(searchCollection != null){
                     cache.put(id, searchCollection.getList());
                     emitFromCache(id);
+                } else {
+                    getIsLoading().postValue(false);
                 }
             }
 
             @Override
             public void onFailure(Call<SearchCollection> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
     }

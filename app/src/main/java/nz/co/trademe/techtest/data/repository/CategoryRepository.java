@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+/**
+ * Repository class, combines local and remote data sources
+ */
 public class CategoryRepository extends BaseRepository {
     private static CategoryRepository INSTANCE = null;
     private CategoryDao categoryDao;
@@ -32,13 +35,22 @@ public class CategoryRepository extends BaseRepository {
     }
 
 
-
+    /**
+     * Triggers data refresh and loading indicator
+     * @param parentId parent category id
+     * @return live data of categories
+     */
     public LiveData<List<Category>> getCategories(String parentId) {
         getIsLoading().setValue(true);
         refreshCategoryTree(parentId);
         return parentId == null ? categoryDao.getMainCategories() : categoryDao.getSubcategoriesForId(parentId);
     }
 
+    /**
+     * Downloads single category tree and saves it to database
+     * Network responses are not propagated
+     * @param parentId parent category id
+     */
     private void refreshCategoryTree(String parentId) {
         String id = parentId == null ? "0" : parentId;
         executor.execute(() -> {
@@ -51,6 +63,7 @@ public class CategoryRepository extends BaseRepository {
                 List<nz.co.trademe.wrapper.models.Category> subCategories = response.body().getSubcategories();
                 if(subCategories == null){
                     return;
+                    //should show error
                 }
                 List<Category> localCategories = new ArrayList<>();
                 for(nz.co.trademe.wrapper.models.Category responseCategory : subCategories){

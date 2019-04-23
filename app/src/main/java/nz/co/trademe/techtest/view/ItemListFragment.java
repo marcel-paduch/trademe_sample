@@ -19,39 +19,42 @@ import nz.co.trademe.techtest.ui.ItemListAdapter;
 import nz.co.trademe.techtest.viewmodel.ItemListViewModel;
 import nz.co.trademe.wrapper.TradeMeApi;
 
-public class ItemListFragment extends Fragment {
+/**
+ * This fragment shows list of items in a choosen category
+ */
+public class ItemListFragment extends BaseFragment {
     public static final String CAT_ID_KEY = CategoryFragment.class.getCanonicalName() + "catId";
-    private ItemListViewModel viewModel;
-    private RecyclerView recyclerView;
-    private ItemListAdapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category_browser, container, false);
-        recyclerView = view.findViewById(R.id.my_recycler_view);
-        ProgressDialog progress = new ProgressDialog(getContext());
-        progress.setTitle("Loading");
-        progress.setCancelable(false);
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new ItemListAdapter();
+        RecyclerView recyclerView = view.findViewById(R.id.my_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ItemListAdapter mAdapter = new ItemListAdapter();
         mAdapter.setItemClickListener(this::loadItemFragment);
         recyclerView.setAdapter(mAdapter);
         ViewModelProvider.Factory factory = new ViewModelProvider.Factory() {
             @NonNull
             @Override
+            @SuppressWarnings("unchecked")
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
                 return (T) new ItemListViewModel(ItemListRepository.getInstance(new TradeMeApi().get()));
             }
         };
-        viewModel = ViewModelProviders.of(this, factory).get(ItemListViewModel.class);
+        ItemListViewModel viewModel = ViewModelProviders.of(this, factory).get(ItemListViewModel.class);
         String catId = null;
         if(getArguments() != null){
             catId = getArguments().getString(CAT_ID_KEY);
         }
         viewModel.init(catId);
+        viewModel.getIsLoading().observe(this, val -> {
+            if (val) {
+                showLoading();
+            } else {
+                dismissLoading();
+            }
+        });
         viewModel.getItems().observe(this, mAdapter::addItems);
         return view;
     }

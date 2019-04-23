@@ -10,7 +10,7 @@ import nz.co.trademe.techtest.data.repository.CategoryRepository;
 import java.util.List;
 
 /**
- * This class exposes repository data and trigger's
+ * This class exposes repository data and triggers new category fetching
  */
 public class CategoryViewModel extends ViewModel {
     private MutableLiveData<String> parentIdFilter = new MutableLiveData<>();
@@ -21,6 +21,10 @@ public class CategoryViewModel extends ViewModel {
         this.repository = repository;
     }
 
+    /**
+     * Inits viewModel, switchmap will trigger getCategories with value from parentIdFilter
+     * every time item is emitted
+     */
     public void init() {
         if (categories == null) {
             parentIdFilter.setValue(null);
@@ -37,6 +41,10 @@ public class CategoryViewModel extends ViewModel {
         return categories;
     }
 
+    /**
+     * Emit new value to parentIdFilter
+     * @param parentId parent category id
+     */
     public void parentIdChanged(String parentId) {
         parentIdFilter.setValue(parentId);
     }
