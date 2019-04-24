@@ -57,7 +57,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
         private ViewHolder(View v) {
             super(v);
             textView = v.findViewById(R.id.category_name_text);
-            textView.setOnClickListener(this);
+            v.setOnClickListener(this);
         }
 
         @Override

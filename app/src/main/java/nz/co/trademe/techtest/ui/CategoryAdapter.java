@@ -57,8 +57,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         private ViewHolder(View v) {
             super(v);
             textView = v.findViewById(R.id.category_name_text);
-            textView.setOnClickListener(this);
-            textView.setOnLongClickListener(this);
+            v.setOnClickListener(this);
+            v.setOnLongClickListener(this);
         }
 
         @Override
