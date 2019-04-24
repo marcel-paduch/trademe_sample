@@ -8,6 +8,7 @@ import nz.co.trademe.techtest.data.offline.model.Category;
 import nz.co.trademe.techtest.data.repository.CategoryRepository;
 
 import java.util.List;
+import java.util.Stack;
 
 /**
  * This class exposes repository data and triggers new category fetching
@@ -16,6 +17,7 @@ public class CategoryViewModel extends ViewModel {
     private MutableLiveData<String> parentIdFilter = new MutableLiveData<>();
     private LiveData<List<Category>> categories;
     private CategoryRepository repository;
+    private Stack<String> categoryBackstack = new Stack<>();
 
     public CategoryViewModel(CategoryRepository repository) {
         this.repository = repository;
@@ -27,6 +29,7 @@ public class CategoryViewModel extends ViewModel {
      */
     public void init() {
         if (categories == null) {
+            categoryBackstack.push(null);
             parentIdFilter.setValue(null);
             categories = Transformations.switchMap(parentIdFilter, repository::getCategories);
         }
@@ -39,6 +42,10 @@ public class CategoryViewModel extends ViewModel {
 
     public LiveData<List<Category>> getCategories() {
         return categories;
+    }
+
+    public Stack<String> getCategoryBackstack() {
+        return categoryBackstack;
     }
 
     /**

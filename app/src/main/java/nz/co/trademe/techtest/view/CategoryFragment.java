@@ -45,6 +45,7 @@ public class CategoryFragment extends BaseFragment {
         mAdapter.setCategoryClickListener(new CategoryAdapter.CategoryClickListener() {
             @Override
             public void onClick(String parentId) {
+                viewModel.getCategoryBackstack().push(parentId);
                 viewModel.parentIdChanged(parentId);
             }
 
@@ -94,6 +95,16 @@ public class CategoryFragment extends BaseFragment {
                     .commit();
         }
 
+    }
+
+    /**
+     * This method will remove last category id from the stack and load next category from stack
+     * @return true if backstack is empty, false otherwise
+     */
+    public boolean popCategoryStack(){
+        viewModel.getCategoryBackstack().pop();
+        viewModel.parentIdChanged(viewModel.getCategoryBackstack().peek());
+        return viewModel.getCategoryBackstack().empty();
     }
 
     @Override
