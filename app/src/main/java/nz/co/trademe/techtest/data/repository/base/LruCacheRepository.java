@@ -12,7 +12,7 @@ import nz.co.trademe.wrapper.TradeMeApiService;
  * @param <T>
  */
 public abstract class LruCacheRepository<T> extends BaseRepository {
-    private static int CACHE_SIZE =  1024 * 1024; // 1MiB
+    private static int CACHE_SIZE =  100;
     protected TradeMeApiService tradeMeApi;
     protected LruCache<String, T> cache = new LruCache<>(CACHE_SIZE);
     protected MutableLiveData<T> data = new MutableLiveData<>();
