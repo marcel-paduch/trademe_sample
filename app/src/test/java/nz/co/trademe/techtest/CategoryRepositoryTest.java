@@ -34,7 +34,7 @@ public class CategoryRepositoryTest {
     @Before
     public void up() {
         MockitoAnnotations.initMocks(this);
-        repository = CategoryRepository.getInstance(categoryDao, tradeMeApi, Executors.newSingleThreadExecutor());
+        repository = CategoryRepository.getInstance(categoryDao, tradeMeApi, new CurrentThreadExecutor());
     }
 
 

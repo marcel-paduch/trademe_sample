@@ -25,13 +25,6 @@ public class CategoryViewModelTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
     @Mock
     CategoryRepository repository;
-    private LifecycleOwner lifecycleOwner = new LifecycleOwner() {
-        @NonNull
-        @Override
-        public Lifecycle getLifecycle() {
-            return mock(Lifecycle.class);
-        }
-    };
     @InjectMocks
     private CategoryViewModel viewModel;
 
