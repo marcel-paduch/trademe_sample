@@ -45,6 +45,7 @@ public class CategoryRepositoryTest {
         subcategories.add(createCategory("2", "ae", null));
         subcategories.add(createCategory("3", "b", null));
         when(tradeMeApi.getCategory(any())).thenReturn(Calls.response(createCategory("0", "ro0t", subcategories)));
+        repository.getCategories(null);
         verify(categoryDao).insertAll(anyList());
         verify(categoryDao).getMainCategories();
         verify(tradeMeApi).getCategory("0");
